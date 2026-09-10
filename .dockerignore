@@ -1,0 +1,7 @@
+.env.EXAMPLE
+.gitignore
+compose.yml
+Dockerfile
+.venv/
+blog/__pycache
+posts/__pycache
