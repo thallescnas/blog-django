@@ -14,6 +14,12 @@ class Tag(models.Model):
     def __str__(self):
         return self.nome
 
+class Autor(models.Model):
+    nome = models.OneToOneField(User, on_delete=models.CASCADE)
+    nasceu_em = models.DateTimeField(blank=True, null=True)
+
+    def __str__(self):
+        return self.nome.username
 class Post(models.Model):
     STATUS_CHOICES = (
         ('rascunho', 'Rascunho'),
@@ -23,7 +29,7 @@ class Post(models.Model):
     titulo = models.CharField(max_length=200)
     conteudo = models.TextField()
 
-    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    autor = models.ForeignKey(Autor, on_delete=models.CASCADE)
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
 

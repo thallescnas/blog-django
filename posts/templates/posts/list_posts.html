@@ -1,3 +1,6 @@
+{% extends 'posts/base.html' %}
+{% block conteudo %}
+<a href="new_post">Criar postagem</a>
 <h1>Post</h1>
 <ul>
     {%for post in posts%}
@@ -6,3 +9,4 @@
     <li> nenhuma noticia encontrada </li>
     {% endfor %}
 </ul>
+{% endblock %}
