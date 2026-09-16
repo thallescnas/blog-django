@@ -42,7 +42,7 @@ class Post(models.Model):
         return self.titulo
 
 class Comentario(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comentarios")
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="post")
     autor = models.CharField(max_length=100)
     texto = models.TextField()
     criado_em = models.DateTimeField(auto_now_add=True)
