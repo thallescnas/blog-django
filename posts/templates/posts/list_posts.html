@@ -2,6 +2,15 @@
 {% block conteudo %}
 <a href="new_post">Criar postagem</a>
 <h1>Post</h1>
+<form method="get">
+    <input type="text" name="q" placeholder="Pesquisar posts por titulo..."
+    value="{{request.GET.q|default:''}}" autocomplete="off">
+    <button type="submit">Pesquisar</button>
+    {% if request.GET.q %}
+    <a href="?">Limpar</a>
+    {% endif %}
+</form>
+<br>
 <ul>
     {%for post in posts%}
     <li> {{post.titulo}} - {{post.autor}}</li>
