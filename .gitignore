@@ -3,4 +3,5 @@ blog/__pycache__/
 posts/__pycache__/
 posts/migrations/__pycache__
 core/__pycache__
+core/migrations/__pycache__
 .env

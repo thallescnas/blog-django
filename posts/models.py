@@ -1,10 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import User
 
 # Create your models here.
-
-class Organizacao(models.Model):
-    nome = models.CharField(max_length=120)
+class DaOrganizacao(models.Model):
+    organizacao = models.ForeignKey(
+        'core.Organizacao',
+        on_delete=models.PROTECT)
+    class Meta:
+        abstract = True
 class Categoria(models.Model):
     nome = models.CharField(max_length=100)
 
@@ -16,29 +18,17 @@ class Tag(models.Model):
     def __str__(self):
         return self.nome
 
-class Perfil(models.Model):
-    PAPEIS = [('admin', 'Administrador'),
-    ('operador', 'Operador')]
-    usuario = models.OneToOneField(
-        User, on_delete=models.CASCADE)
-    organizacao = models.ForeignKey(
-        Organizacao, on_delete=models.PROTECT)
-    papel = models.CharField(
-        max_length=20, choices=PAPEIS)
-class Post(models.Model):
+
+class Post(DaOrganizacao):
     STATUS_CHOICES = (
         ('rascunho', 'Rascunho'),
         ('revisao', 'Em revisão'),
         ('publicado', 'Publicado')
     )
-    organizacao = models.ForeignKey(
-        Organizacao
-        , on_delete=models.PROTECT
-    )
     titulo = models.CharField(max_length=200)
     conteudo = models.TextField()
 
-    autor = models.ForeignKey(Perfil, on_delete=models.CASCADE)
+    autor = models.ForeignKey('core.Perfil', on_delete=models.CASCADE)
     categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
 
