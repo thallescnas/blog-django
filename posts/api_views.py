@@ -23,4 +23,4 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
 
     def get_queryset(self):
-        return Post.objects.filter(organizacao=self.request.perfil.organizacao)
+        return Post.objects.filter(organizacao=self.request.user.perfil.organizacao)
