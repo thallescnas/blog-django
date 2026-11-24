@@ -12,6 +12,9 @@ def org_atual(request):
         raise PermissionDenied('Este perfil não tem vinculação com Organização nenhuma.')
     return request.user.perfil.organizacao
 
+def isadmin(user):
+    return hasattr(user, 'perfil') and getattr(user.perfil, "papel", None) == 'admin'
+
 @login_required
 def list_posts(request : HttpRequest):
     org = org_atual(request)
@@ -30,6 +33,9 @@ def list_posts(request : HttpRequest):
     })
 @login_required
 def create_post(request : HttpRequest):
+
+    if not isadmin(request.user):
+        raise PermissionDenied("Apenas os adm podem fazer postagens!")
     org = org_atual(request)
     if request.method == "POST":
         form = PostForm(request.POST or None, org=org)
