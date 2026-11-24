@@ -10,9 +10,17 @@ class isAdminOrReadonly(permissions.BasePermission):
 
 
 class PostListCreate(generics.ListCreateAPIView):
-    queryset = Post.objects.all()
+    permission_classes = [permissions.IsAuthenticated, isAdminOrReadonly]
     serializer_class = PostSerializer
 
+    def get_queryset(self):
+        return Post.objects.filter(organizacao=self.request.user.perfil.organizacao)
+    def perform_create(self, serializer):
+        serializer.save(organizacao=self.request.user.perfil.organizacao)
+
 class PostDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Post.objects.all()
+    permission_classes = [permissions.IsAuthenticated, isAdminOrReadonly]
     serializer_class = PostSerializer
+
+    def get_queryset(self):
+        return Post.objects.filter(organizacao=self.request.perfil.organizacao)
