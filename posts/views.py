@@ -2,11 +2,14 @@ from django.http import HttpRequest
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from django.core.exceptions import PermissionDenied
 from .models import Post, Categoria
 from .forms import PostForm
 
 
 def org_atual(request):
+    if not hasattr(request.user, 'perfil'):
+        raise PermissionDenied('Este perfil não tem vinculação com Organização nenhuma.')
     return request.user.perfil.organizacao
 
 @login_required
