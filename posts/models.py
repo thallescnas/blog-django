@@ -10,10 +10,18 @@ class DaOrganizacao(models.Model):
 class Categoria(DaOrganizacao):
     nome = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name = 'Categoria'
+        verbose_name_plural = 'Categorias'
+
     def __str__(self):
         return self.nome
 class Tag(DaOrganizacao):
     nome = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name = 'Tag'
+        verbose_name_plural = 'Tags'
 
     def __str__(self):
         return self.nome
@@ -22,7 +30,7 @@ class Tag(DaOrganizacao):
 class Post(DaOrganizacao):
     STATUS_CHOICES = (
         ('rascunho', 'Rascunho'),
-        ('revisao', 'Em revisão'),
+        ('revisao', 'Em revisao'),
         ('publicado', 'Publicado')
     )
     titulo = models.CharField(max_length=200)
@@ -38,6 +46,8 @@ class Post(DaOrganizacao):
     atualizado_em = models.DateTimeField(auto_now=True)
 
     class Meta:
+        verbose_name = 'Publicacao'
+        verbose_name_plural = 'Publicacoes'
         indexes = [
             models.Index(fields=['organizacao', 'criado_em'], name='posts_post_org_criado_idx'),
         ]
@@ -51,5 +61,9 @@ class Comentario(models.Model):
     texto = models.TextField()
     criado_em = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        verbose_name = 'Comentario'
+        verbose_name_plural = 'Comentarios'
+
     def __str__(self):
-        return f"Comentário de {self.autor} em {self.post.titulo}"
+        return f"Comentario de {self.autor} em {self.post.titulo}"

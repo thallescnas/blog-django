@@ -7,6 +7,11 @@ class Organizacao(models.Model):
     criado_em = models.DateTimeField(
         auto_now_add=True
     )
+
+    class Meta:
+        verbose_name = 'Organizacao'
+        verbose_name_plural = 'Organizacoes'
+
     def __str__(self):
         return self.nome
     
@@ -19,5 +24,10 @@ class Perfil(models.Model):
         Organizacao, on_delete=models.PROTECT)
     papel = models.CharField(
         max_length=20, choices=PAPEIS)
+
+    class Meta:
+        verbose_name = 'Perfil'
+        verbose_name_plural = 'Perfis'
+
     def __str__(self):
         return f'{self.usuario.username} - {self.organizacao.nome} ({self.papel})'

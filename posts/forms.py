@@ -19,7 +19,7 @@ class PostForm(forms.ModelForm):
         if conteudo and len(conteudo.strip()) < 50:
             raise forms.ValidationError(
                 f'O conteudo deve ter no minimo 50 caracteres. '
-                f'Você tem apenas {len(conteudo.strip())}'
+                f'Voce tem apenas {len(conteudo.strip())}'
             )
         return conteudo
 

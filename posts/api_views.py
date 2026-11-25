@@ -6,15 +6,15 @@ from .serializer import PostSerializer
 from .forms import filtrar_periodo
 from .dashboard import calcular_metricas
 
-class isAdminOrReadonly(permissions.BasePermission):
-    def has_permission(self, request):
+class IsAdminOrReadOnly(permissions.BasePermission):
+    def has_permission(self, request, view=None):
         if request.method in permissions.SAFE_METHODS:
             return True
         return (hasattr(request.user, "perfil") and getattr(request.user.perfil, "papel", None) == "admin")
 
 
-class PostListCreate(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated, isAdminOrReadonly]
+class PostListCreateView(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticated, IsAdminOrReadOnly]
     serializer_class = PostSerializer
 
     def get_queryset(self):
@@ -22,15 +22,15 @@ class PostListCreate(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(organizacao=self.request.user.perfil.organizacao)
 
-class PostDetail(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [permissions.IsAuthenticated, isAdminOrReadonly]
+class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsAuthenticated, IsAdminOrReadOnly]
     serializer_class = PostSerializer
 
     def get_queryset(self):
         return Post.objects.filter(organizacao=self.request.user.perfil.organizacao)
 
 
-class DashboardApi(APIView):
+class DashboardApiView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):

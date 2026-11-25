@@ -11,14 +11,14 @@ from .dashboard import calcular_metricas
 
 def org_atual(request):
     if not hasattr(request.user, 'perfil'):
-        raise PermissionDenied('Este perfil não tem vinculação com Organização nenhuma.')
+        raise PermissionDenied('Este perfil nao tem vinculacao com Organizacao nenhuma.')
     return request.user.perfil.organizacao
 
 def isadmin(user):
     return hasattr(user, 'perfil') and getattr(user.perfil, "papel", None) == 'admin'
 
 @login_required
-def list_posts(request : HttpRequest):
+def listar_posts(request: HttpRequest):
     org = org_atual(request)
     posts = (
         Post.objects.filter(organizacao=org, status="publicado")
@@ -38,7 +38,7 @@ def list_posts(request : HttpRequest):
         "categorias": categorias
     })
 @login_required
-def create_post(request : HttpRequest):
+def criar_post(request: HttpRequest):
 
     if not isadmin(request.user):
         raise PermissionDenied("Apenas os adm podem fazer postagens!")
@@ -56,7 +56,7 @@ def create_post(request : HttpRequest):
     return render(request, "posts/forms.html", {"form": form})
 
 @login_required
-def dashboard(request: HttpRequest):
+def exibir_dashboard(request: HttpRequest):
     org = org_atual(request)
     base = filtrar_periodo(request, Post.objects.filter(organizacao=org))
 
@@ -82,7 +82,7 @@ def _sanitizar_csv(valor):
 def exportar_csv(request: HttpRequest):
     org = org_atual(request)
     if not isadmin(request.user):
-        raise PermissionDenied("Apenas administradores podem exportar o relatório.")
+        raise PermissionDenied("Apenas administradores podem exportar o relatorio.")
 
     qs = filtrar_periodo(
         request,
@@ -94,7 +94,7 @@ def exportar_csv(request: HttpRequest):
     resp = HttpResponse(content_type="text/csv; charset=utf-8")
     resp["Content-Disposition"] = 'attachment; filename="posts.csv"'
     writer = csv.writer(resp)
-    writer.writerow(["Título", "Autor", "Categoria", "Status", "Criado em"])
+    writer.writerow(["Titulo", "Autor", "Categoria", "Status", "Criado em"])
 
     for post in qs:
         writer.writerow([

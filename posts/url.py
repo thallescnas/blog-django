@@ -6,17 +6,17 @@ from . import views
 urlpatterns = [
     path(
         '',
-        views.list_posts,
+        views.listar_posts,
         name='posts'
     ),
     path(
         'new_post', 
-        views.create_post,
+        views.criar_post,
         name='create_post'
     ),
     path(
         'dashboard',
-        views.dashboard,
+        views.exibir_dashboard,
         name='dashboard'
     ),
     path(
