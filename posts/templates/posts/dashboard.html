@@ -13,6 +13,9 @@
     {{ form.fim }}
     <button type="submit">Filtrar</button>
     <a href="{% url 'dashboard' %}" class="btn btn-secondary">Limpar</a>
+    {% if mostra_series %}
+        <a href="{% url 'exportar_csv' %}?{{ request.GET.urlencode }}" class="btn btn-secondary">Exportar CSV</a>
+    {% endif %}
 </form>
 
 <div class="cards">
@@ -39,11 +42,13 @@
 </div>
 
 <div class="dashboard-grid">
+    {% if mostra_series %}
     <div class="panel">
         <h2>Posts por Mês</h2>
         {{ por_mes|json_script:"dados-mes" }}
         <canvas id="graf-mes"></canvas>
     </div>
+    {% endif %}
 
     <div class="panel">
         <h2>Top 5 Autores</h2>

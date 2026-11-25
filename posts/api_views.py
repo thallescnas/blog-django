@@ -1,6 +1,10 @@
 from rest_framework import generics, permissions
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from .models import Post
 from .serializer import PostSerializer
+from .forms import filtrar_periodo
+from .dashboard import calcular_metricas
 
 class isAdminOrReadonly(permissions.BasePermission):
     def has_permission(self, request):
@@ -24,3 +28,12 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return Post.objects.filter(organizacao=self.request.user.perfil.organizacao)
+
+
+class DashboardApi(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        org = request.user.perfil.organizacao
+        base = filtrar_periodo(request, Post.objects.filter(organizacao=org))
+        return Response(calcular_metricas(base))

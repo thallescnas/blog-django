@@ -18,5 +18,10 @@ urlpatterns = [
         'dashboard',
         views.dashboard,
         name='dashboard'
-    )
+    ),
+    path(
+        'dashboard/exportar/',
+        views.exportar_csv,
+        name='exportar_csv'
+    ),
 ]
