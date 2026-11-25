@@ -1,14 +1,18 @@
 from django.db.models import Count, Q
 from django.db.models.functions import TruncMonth
-from .models import Post
+from .models import Comentario
+
 
 def calcular_metricas(base):
     kpis = base.aggregate(
         total=Count("id"),
         autores=Count("autor", distinct=True),
         publicados=Count("id", filter=Q(status="publicado")),
-        racunhos=Count("id", filter=Q(status="rascunho"))
+        rascunhos=Count("id", filter=Q(status="rascunho")),
     )
+    kpis["comentarios"] = Comentario.objects.filter(post__in=base).aggregate(
+        total=Count("id")
+    )["total"]
     ranking = (
         base.values("autor__usuario__username")
         .annotate(total=Count("id")).order_by("-total")[:5]
