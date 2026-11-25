@@ -1,11 +1,15 @@
 {% extends 'posts/base.html' %}
 
 {% block conteudo %}
-<form method="post">
-
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button>Salvar</button>
-</form>
-
+<div class="form-card">
+    <h1>Nova Postagem</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div style="display:flex; gap:0.75rem; margin-top:1.25rem;">
+            <button type="submit">Publicar</button>
+            <a href="{% url 'posts' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
 {% endblock %}

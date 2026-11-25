@@ -1,12 +1,41 @@
 {% load static %}
-<html>
-    <head>
-        <link rel="stylesheet" href="{% static 'style.css' %}">
-    </head>
-   <body>
-    <header>Jornal Maricaense</header>
-    {% block conteudo %}
-    {% endblock %}
-    <footer>©2026</footer>
-    </body>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornal Maricaense</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}?v=2">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="{% url 'posts' %}" class="brand">Jornal Maricaense</a>
+            <nav class="nav-links">
+                <a href="{% url 'posts' %}">Notícias</a>
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'create_post' %}" class="btn">Nova Postagem</a>
+                {% if user.is_authenticated %}
+                    <span class="nav-user">{{ user.username }}</span>
+                    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-logout">Sair</button>
+                    </form>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% block conteudo %}
+        {% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        Jornal Maricaense &copy; 2026
+    </footer>
+</body>
 </html>
