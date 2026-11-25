@@ -12,3 +12,12 @@ def metricas_kpis(org):
     )
 
     return kpis
+
+def metricas_ranking(org):
+    base = Post.objects.filter(organizacao=org)
+
+    ranking = (
+        base.values("autor__usuario__username").annotate(total=Count("id")).order_by("-total")[:5]
+    )
+
+    return ranking
