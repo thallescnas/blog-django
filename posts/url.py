@@ -13,5 +13,10 @@ urlpatterns = [
         'new_post', 
         views.create_post,
         name='create_post'
+    ),
+    path(
+        'dashboard',
+        views.dashboard,
+        name='dashboard'
     )
 ]

@@ -4,7 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.core.exceptions import PermissionDenied
 from .models import Post, Categoria
-from .forms import PostForm
+from .forms import PostForm, PeriodoForm, filtrar_periodo
+from .dashboard import calcular_metricas
 
 
 def org_atual(request):
@@ -48,3 +49,18 @@ def create_post(request : HttpRequest):
     else:
         form = PostForm()
     return render(request, "posts/forms.html", {"form": form})
+
+@login_required
+def dashboard(request: HttpRequest):
+    org = org_atual(request)
+    base = filtrar_periodo(request, Post.objects.filter(organizacao=org))
+
+    metricas = calcular_metricas(base)
+
+    contexto = {
+        **metricas,
+        "form":
+        PeriodoForm(request.GET),
+        "organizacao": org
+    }
+    return render(request, "posts/dashboard.html", contexto)
