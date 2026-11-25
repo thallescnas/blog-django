@@ -20,6 +20,10 @@ def calcular_metricas(base):
     por_mes_qs = (
         base.annotate(mes=TruncMonth("criado_em")).values("mes").annotate(total=Count("id")).order_by("mes")
     )
+    por_mes = [
+        {"mes": r["mes"].strftime("%m/%Y"), "total": r["total"]}
+        for r in por_mes_qs if r["mes"]
+    ]
     por_status = (
         base.values("status").annotate(total=Count("id")).order_by("-total")
     )
@@ -27,6 +31,6 @@ def calcular_metricas(base):
     return {
         "kpis": kpis,
         "ranking": ranking,
-        "por_mes_qs": por_mes_qs,
+        "por_mes": por_mes,
         "por_status": por_status
     }
