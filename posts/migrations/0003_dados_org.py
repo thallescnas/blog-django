@@ -10,6 +10,9 @@ def org_padrao(apps, schema_editor):
         organizacao__isnull=True
         ).update(organizacao=org)
 class Migration(migrations.Migration):
-    dependencies = [('posts', '0001_initial')]
+    dependencies = [
+        ('core', '0001_initial'),
+        ('posts', '0003_add_organizacao'),
+    ]
     operations = [migrations.RunPython(
     org_padrao, migrations.RunPython.noop)]
