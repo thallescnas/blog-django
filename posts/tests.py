@@ -40,7 +40,7 @@ class DashboardTest(TestCase):
         for i in range(3):
             p = Post.objects.create(
                 titulo=f"Post A {i}",
-                conteudo="Conteúdo de teste com mais de cinquenta caracteres para validação.",
+                conteudo="Conteudo de teste com mais de cinquenta caracteres para validacao.",
                 autor=self.perfil_a,
                 categoria=self.cat_a,
                 organizacao=self.org_a,
@@ -54,13 +54,13 @@ class DashboardTest(TestCase):
         for i in range(5):
             p = Post.objects.create(
                 titulo=f"Post B {i}",
-                conteudo="Conteúdo de teste da organização B com mais de cinquenta caracteres.",
+                conteudo="Conteudo de teste da organizacao B com mais de cinquenta caracteres.",
                 autor=self.perfil_b,
                 organizacao=self.org_b,
                 status="publicado",
             )
             if i < 4:
-                Comentario.objects.create(post=p, autor="Leitor B", texto="Comentário B")
+                Comentario.objects.create(post=p, autor="Leitor B", texto="Comentario B")
 
     def test_total_da_organizacao(self):
         self.client.force_login(self.user_a)
