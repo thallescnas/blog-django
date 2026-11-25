@@ -1,4 +1,5 @@
 from django.db.models import Count, Q
+from django.db.models.functions import TruncMonth
 from .models import Post
 
 def metricas_kpis(org):
@@ -21,3 +22,21 @@ def metricas_ranking(org):
     )
 
     return ranking
+
+def metricas_por_mes(org):
+    base = Post.objects.filter(organizacao=org)
+
+    por_mes = (
+        base.annotate(mes=TruncMonth("criado_em")).values("mes").annotate(total=Count("id")).order_by("mes")
+    )
+
+    return por_mes
+
+def metricas_por_status(org):
+    base = Post.objects.filter(organizacao=org)
+
+    por_status = (
+        base.values("status").annotate(total=Count("id")).order_by("-total")
+    )
+
+    return por_status
