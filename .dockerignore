@@ -3,6 +3,4 @@
 compose.yml
 Dockerfile
 .venv/
-blog/__pycache__
-posts/__pycache__
-posts/migrations/__pycache__
+__pycache__/
