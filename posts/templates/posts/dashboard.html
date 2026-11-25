@@ -1,0 +1,75 @@
+{% extends "posts/base.html" %}
+
+{% block conteudo %}
+<h1>Dashboard — {{ organizacao.nome }}</h1>
+
+<form method="get">
+    {{ form.as_p }}
+    <button type="submit">Filtrar</button>
+    <a href="{% url 'dashboard' %}">Limpar</a>
+</form>
+
+<!-- Cartões de KPI -->
+<div class="cards">
+    <div class="card">
+        <small>Total de Posts</small>
+        <strong>{{ kpis.total }}</strong>
+    </div>
+    <div class="card">
+        <small>Publicados</small>
+        <strong>{{ kpis.publicados }}</strong>
+    </div>
+    <div class="card">
+        <small>Rascunhos</small>
+        <strong>{{ kpis.rascunhos }}</strong>
+    </div>
+    <div class="card">
+        <small>Autores ativos</small>
+        <strong>{{ kpis.autores }}</strong>
+    </div>
+    <div class="card">
+        <small>Comentários</small>
+        <strong>{{ kpis.comentarios }}</strong>
+    </div>
+</div>
+
+<h2>Top 5 Autores</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Autor</th>
+            <th>Posts</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in ranking %}
+        <tr>
+            <td>{{ item.autor__usuario__username }}</td>
+            <td>{{ item.total }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="2">Sem dados no período.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2>Posts por Status</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Status</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in por_status %}
+        <tr>
+            <td>{{ item.status }}</td>
+            <td>{{ item.total }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="2">Sem dados no período.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

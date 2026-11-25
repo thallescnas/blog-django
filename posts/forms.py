@@ -41,5 +41,5 @@ def filtrar_periodo(request, qs):
         if form.cleaned_data["inicio"]:
             qs = qs.filter(criado_em__date__gte=form.cleaned_data["inicio"])
         if form.cleaned_data["fim"]:
-            qs = qs.filter(criado__emm__date__lte=form.cleaned_data["fim"])
-            return qs
+            qs = qs.filter(criado_em__date__lte=form.cleaned_data["fim"])
+    return qs
