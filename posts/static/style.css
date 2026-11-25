@@ -43,7 +43,6 @@ a:hover {
     text-decoration: underline;
 }
 
-/* Header & Navigation */
 .site-header {
     background: var(--gradient);
     box-shadow: 0 4px 20px rgba(79, 70, 229, 0.25);
@@ -125,7 +124,6 @@ a:hover {
     background: rgba(255, 255, 255, 0.28);
 }
 
-/* Main Container */
 .container {
     max-width: 1080px;
     width: 100%;
@@ -134,7 +132,6 @@ a:hover {
     flex: 1;
 }
 
-/* Page Header */
 .page-header {
     display: flex;
     align-items: center;
@@ -148,7 +145,6 @@ a:hover {
     font-size: 1.85rem;
 }
 
-/* Buttons */
 .btn, button[type="submit"] {
     display: inline-flex;
     align-items: center;
@@ -180,7 +176,6 @@ a:hover {
     color: var(--accent);
 }
 
-/* Filter Bar */
 .filter-bar {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -217,7 +212,6 @@ a:hover {
     color: var(--muted);
 }
 
-/* Blog Post Cards */
 .posts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
@@ -283,7 +277,6 @@ a:hover {
     color: var(--muted);
 }
 
-/* Forms */
 .form-card {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -335,7 +328,6 @@ a:hover {
     margin-bottom: 0.5rem;
 }
 
-/* Dashboard */
 .cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
@@ -420,7 +412,6 @@ tr:last-child td {
     border-bottom: none;
 }
 
-/* Footer */
 .site-footer {
     text-align: center;
     padding: 1.5rem;
