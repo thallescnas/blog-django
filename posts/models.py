@@ -7,12 +7,12 @@ class DaOrganizacao(models.Model):
         on_delete=models.PROTECT)
     class Meta:
         abstract = True
-class Categoria(models.Model):
+class Categoria(DaOrganizacao):
     nome = models.CharField(max_length=100)
 
     def __str__(self):
         return self.nome
-class Tag(models.Model):
+class Tag(DaOrganizacao):
     nome = models.CharField(max_length=100)
 
     def __str__(self):
@@ -36,6 +36,11 @@ class Post(DaOrganizacao):
 
     criado_em = models.DateTimeField(auto_now_add=True)
     atualizado_em = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['organizacao', 'criado_em'], name='posts_post_org_criado_idx'),
+        ]
 
     def __str__(self):
         return self.titulo
